@@ -1,0 +1,126 @@
+@import "presets";
+@mixin flex_screen {
+  display:flex;
+  width:100vw;
+  height:100vh;
+}
+@mixin screen_center {
+  @include flex_screen;
+  align-items: center;
+  justify-content: center;
+
+}
+
+$colors :(
+  "light-bg": rgba(224,242,254,1),
+  "light-text":rgba(20,83,45,1),
+  "dark-bg":rgba(15,23,42,1),
+  "dark-text":rgb(251 191 36)
+);
+
+@function map($value) {
+  @return map-get($colors,$value)
+}
+@mixin colors($light:true) {
+  @if $light {
+    background-color:map(light-bg);
+    color: map(light-text);
+  }
+  @else {
+    background-color:map(dark-bg) ;
+    color: map(dark-text);
+  }
+}
+body {
+  width: 100vw;
+  line-height: 1.75rem;
+  font-size: 5px;
+  @include colors
+}
+
+@media (prefers-color-scheme: dark) {
+
+  html {
+    color-scheme: dark;
+  }
+  body {
+    @include colors(false);
+  }
+
+ .bookslist {
+  @include colors(false);
+}
+.bookslistItem{
+  @include colors(false);
+}
+  .loader {
+    &__card {
+      @include colors(false);
+      &--paper {
+        @include colors(false);
+      }
+    }
+  }
+}
+input {
+  --tw-bg-opacity: 1;
+  background-color: rgb(186 230 253 / var(--tw-bg-opacity));
+}
+
+.dark input {
+  --tw-bg-opacity: 1;
+  background-color: rgb(30 41 59 / var(--tw-bg-opacity));
+}
+
+.loader {
+  &__card {
+    @include colors;
+    &--paper {}
+  }
+}
+.circle {
+  border-radius:50%;
+}
+.full {
+  width: 100vw;
+  height: 100vh;
+}
+.hide {
+  opacity:0;
+}
+.loader {
+  &__card {
+    @include screen_center;
+    &--paper {
+      &--text {
+        animation-name: blink;
+        animation-duration: 2s;
+        animation-direction: alternate;
+        animation-fill-mode: forwards;
+        animation-iteration-count: infinite;
+      }
+    }
+
+  }
+}
+@keyframes blink {
+  from {
+    opacity: 1;
+  }
+  to {
+    opacity: 0;
+  }
+}
+.bookslist {
+  @include colors;
+  @include flex_screen;
+  overflow:scroll;
+  flex-flow: column wrap;
+}
+.bookslistItem {
+  border-radius:15px;
+  width:30vw;
+  @include colors;
+  &__header {}
+  &__main {}
+}

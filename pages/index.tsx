@@ -9,7 +9,7 @@ import {
 } from "@mui/material"
 
 
-export default function Home() {
+const Home = () =>{
 
   return ( <div>
    <Head>
@@ -21,7 +21,7 @@ export default function Home() {
     <link rel = "icon" href = "/favicon.ico" />
    </Head> 
    <Card className="homepage">
-     <img src="/books.jpg" className="homepage__image"/>
+     <img src="/books.jpg" className="homepage__image" alt="boks"/>
      <Typography variant="h1" className="homepage__text">
      We grow by learning everyday
      </Typography>
@@ -36,3 +36,4 @@ export default function Home() {
   </div>
   )
 }
+export default Home

@@ -1,6 +1,6 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import Link from 'next/link'
+import  { useRouter } from 'next/router'
 import {
   Typography,
   Button,
@@ -10,7 +10,12 @@ import {
 
 
 const Home = () =>{
-
+const router= useRouter();
+const go = () =>{
+  console.log(typeof(router))
+  console.log(Object.keys(router))
+  //router.push("/books")
+}
   return ( <div>
    <Head>
     <title> Library </title> 
@@ -25,12 +30,10 @@ const Home = () =>{
      <Typography variant="h1" className="homepage__text">
      We grow by learning everyday
      </Typography>
-     <Button className="homepage__button">
-     <Link href="/books">
+     <Button className="homepage__button" onClick={()=>go()}>
      <Typography variant="h4" className="homepage__button--text">
      Read a Book today 
      </Typography>
-     </Link>
      </Button>
      </Card>
   </div>

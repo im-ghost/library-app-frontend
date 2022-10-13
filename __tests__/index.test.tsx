@@ -1,8 +1,6 @@
 
 import Home from '../pages/index'
-import singletonRouter, {
-  useRouter
- } from 'next/router';
+
 import Link from 'next/link';
 import {
   render,
@@ -11,7 +9,31 @@ import {
   screen,
   waitFor
  } from '@testing-library/react';
+ import singletonRouter,{ useRouter } from "next/router";
+ jest.mock("next/router",()=>({
+   useRouter(){
+     return {
+       route:"/",
+       pathName:"",
+       asPath:"",
+       push:jest.fn(),
+       query:""
+     }
+   }
+ }))
+ jest.spyOn(require("next/router"),"useRouter")
 describe('Home', () => {
+  useRouter.mockImplementation(()=>({
+   useRouter(){
+     return {
+       route:"/",
+       pathName:"",
+       asPath:"",
+       push:jest.fn(),
+       query:""
+     }
+   }
+ }))
   describe("Renders necessary components"  ,()=>{
     
       
@@ -40,5 +62,15 @@ describe('Home', () => {
       expect(image).toBeInTheDocument()
     })
   
+})
+describe("Routing works ",()=>{
+  it("Read a book today",()=>{
+    render(<Home/>)
+    const btn = screen.getByRole("heading",{
+      name:/Read a book today/i
+    })
+    fireEvent.click(btn)
+    expect(useRouter.route).toBe("/books")
+  })
 })
 })
